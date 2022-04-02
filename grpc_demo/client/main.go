@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"grpc_demo/proto/proto"
 )
 
@@ -15,7 +16,16 @@ func main() {
 	}
 	defer conn.Close()
 	c := helloword.NewGreeterClient(conn)
-	r, err := c.SayHello(context.Background(), &helloword.HelloRequest{Name: "bobby"})
+	// 往matedate 里面放数据
+	//md := metadata.Pairs("timestamp", time.Now().Format(timestampFormat))
+	md := metadata.New(map[string]string{
+		"name":    "sen",
+		"pasword": "imooc",
+	})
+	ctx := metadata.NewOutgoingContext(context.Background(), md)
+	r, err := c.SayHello(ctx, &helloword.HelloRequest{Name: "sen"})
+
+	// r, err := c.SayHello(context.Background(), &helloword.HelloRequest{Name: "bobby"})
 	if err != nil {
 		panic(err)
 	}

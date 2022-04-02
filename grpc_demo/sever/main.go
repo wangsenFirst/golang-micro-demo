@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/metadata"
 	"net"
 
 	"google.golang.org/grpc"
@@ -13,6 +14,18 @@ type Server struct {
 }
 
 func (s *Server) SayHello(ctx context.Context, request *helloword.HelloRequest) (*helloword.HelloReply, error) {
+	// 从metadate取数据
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		fmt.Println("get metadata error")
+	}
+	if nameSlice, ok := md["name"]; ok {
+		fmt.Println(nameSlice)
+		for i, e := range nameSlice {
+			fmt.Println(i, e)
+		}
+	}
+
 	return &helloword.HelloReply{Message: "Hello " + request.Name}, nil
 }
 
