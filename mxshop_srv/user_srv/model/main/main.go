@@ -24,7 +24,7 @@ func genMd5(code string) string {
 }
 
 func main() {
-	dsn := "root:123456@tcp(81.70.45.186:3306)/mxshop_user_srv?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(192.168.0.104:3306)/mxshop_user_srv?charset=utf8mb4&parseTime=True&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -53,7 +53,7 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 		user := model.User{
-			NickName: fmt.Sprintf("wangsen%d", i),
+			NickName: fmt.Sprintf("bobby%d", i),
 			Mobile:   fmt.Sprintf("1878222222%d", i),
 			Password: newPassword,
 		}

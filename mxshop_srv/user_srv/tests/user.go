@@ -14,7 +14,7 @@ var conn *grpc.ClientConn
 
 func Init() {
 	var err error
-	conn, err = grpc.Dial("127.0.0.1:8080", grpc.WithInsecure())
+	conn, err = grpc.Dial("127.0.0.1:50051", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
@@ -45,12 +45,11 @@ func TestGetUserList() {
 func TestCreateUser() {
 	for i := 0; i < 10; i++ {
 		rsp, err := userClient.CreateUser(context.Background(), &proto.CreateUserInfo{
-			NickName: fmt.Sprintf("hahaha%d", i),
-			Mobile:   fmt.Sprintf("1383212734%d", i),
+			NickName: fmt.Sprintf("bobby%d", i),
+			Mobile:   fmt.Sprintf("1878222222%d", i),
 			PassWord: "admin123",
 		})
 		if err != nil {
-			fmt.Println(err.Error(), err)
 			panic(err)
 		}
 		fmt.Println(rsp.Id)
@@ -59,8 +58,8 @@ func TestCreateUser() {
 
 func main() {
 	Init()
-	TestCreateUser()
-	//TestGetUserList()
+	//TestCreateUser()
+	TestGetUserList()
 
 	conn.Close()
 }
