@@ -30,7 +30,7 @@ func main() {
 	initialize.InitLogger()
 	initialize.InitConfig()
 	initialize.InitDB()
-	initialize.InitEs()
+	//initialize.InitEs()
 	zap.S().Info(global.ServerConfig)
 
 	flag.Parse()
@@ -60,12 +60,12 @@ func main() {
 		panic(err)
 	}
 	//生成对应的检查对象
-	check := &api.AgentServiceCheck{
-		GRPC:                           fmt.Sprintf("%s:%d", global.ServerConfig.Host, *Port),
-		Timeout:                        "5s",
-		Interval:                       "5s",
-		DeregisterCriticalServiceAfter: "15s",
-	}
+	//check := &api.AgentServiceCheck{
+	//	GRPC:                           fmt.Sprintf("%s:%d", global.ServerConfig.Host, *Port),
+	//	Timeout:                        "5s",
+	//	Interval:                       "5s",
+	//	DeregisterCriticalServiceAfter: "15s",
+	//}
 
 	//生成注册对象
 	registration := new(api.AgentServiceRegistration)
@@ -74,8 +74,9 @@ func main() {
 	registration.ID = serviceID
 	registration.Port = *Port
 	registration.Tags = global.ServerConfig.Tags
-	registration.Address = global.ServerConfig.Host
-	registration.Check = check
+	registration.Address = "127.0.0.1"
+	// 本地启动不检查
+	//registration.Check = check
 	//1. 如何启动两个服务
 	//2. 即使我能够通过终端启动两个服务，但是注册到consul中的时候也会被覆盖
 	err = client.Agent().ServiceRegister(registration)

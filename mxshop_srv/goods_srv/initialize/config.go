@@ -22,6 +22,7 @@ func GetEnvInfo(env string) bool {
 func InitConfig() {
 	//从配置文件中读取出对应的配置
 	debug := GetEnvInfo("MXSHOP_DEBUG")
+	debug = true
 	configFilePrefix := "config"
 	configFileName := fmt.Sprintf("goods_srv/%s-pro.yaml", configFilePrefix)
 	if debug {

@@ -25,7 +25,7 @@ func TestGetBrandList() {
 
 func Init() {
 	var err error
-	conn, err = grpc.Dial("127.0.0.1:50051", grpc.WithInsecure())
+	conn, err = grpc.Dial("127.0.0.1:52407", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
